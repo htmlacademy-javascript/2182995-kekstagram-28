@@ -26,7 +26,6 @@ const createIDGenerator = () => {
 const createCommentID = createIDGenerator();
 
 // Функция создает содержание комментария
-
 const createMessage = () =>
   Array.from({length: getRandomInteger(1, 2)}, () =>
     getRandomArrayElement(COMMENTS_LINES)
