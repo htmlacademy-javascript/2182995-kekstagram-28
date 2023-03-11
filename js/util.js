@@ -7,9 +7,6 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
-export {getRandomInteger};
-
-
 // Функция генерирует случайное целое число без повтора
 
 const createRandomIdFromRangeGenerator = (min, max) => {
@@ -28,11 +25,12 @@ const createRandomIdFromRangeGenerator = (min, max) => {
   };
 };
 
-export {createRandomIdFromRangeGenerator};
-
 // Функция извлекает случайный элемент из массива
 
 const getRandomArrayElement = (array) =>
   array[getRandomInteger(0, array.length - 1)];
 
 export {getRandomArrayElement};
+export {getRandomInteger};
+export {createRandomIdFromRangeGenerator};
+
