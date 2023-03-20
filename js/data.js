@@ -1,9 +1,9 @@
 import {getRandomInteger} from './util.js';
-import {createRandomIdFromRangeGenerator} from './util';
-import {getRandomArrayElement} from './util';
-import {createComment} from './create-comment';
+import {createRandomIdFromRangeGenerator} from './util.js';
+import {getRandomArrayElement} from './util.js';
+import {createComment} from './create-comment.js';
 
-const PICTURE_COUNT = 25;
+const PICTURE_COUNT = 15;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
 const COMMENTS_COUNT = 25;
