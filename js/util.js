@@ -25,12 +25,16 @@ const createRandomIdFromRangeGenerator = (min, max) => {
   };
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 // Функция извлекает случайный элемент из массива
 
 const getRandomArrayElement = (array) =>
   array[getRandomInteger(0, array.length - 1)];
 
+
 export {getRandomArrayElement};
 export {getRandomInteger};
 export {createRandomIdFromRangeGenerator};
+export {isEscapeKey};
 

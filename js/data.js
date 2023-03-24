@@ -12,8 +12,8 @@ const DESCRIPTIONS = [
   'Наконец-то отпуск!', 'Отлично провели вечер, спасибо'
 ];
 
-const createPhotoId = createRandomIdFromRangeGenerator (1,PICTURE_COUNT);
 
+const createPhotoId = createRandomIdFromRangeGenerator (1,PICTURE_COUNT);
 const createPhotoDescription = () => {
   const randomID = createPhotoId();
   return ({
