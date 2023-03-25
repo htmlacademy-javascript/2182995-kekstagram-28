@@ -1,14 +1,12 @@
-import { createPhotos } from './data.js';
 import { openFullPicture } from './full-picture.js';
 
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictures = createPhotos();
 const similarListFragment = document.createDocumentFragment();
 
 
-const renderPictures = () => {
+const renderPictures = (pictures) => {
   pictures.forEach((picture) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = picture.url;
@@ -23,7 +21,6 @@ const renderPictures = () => {
     });
   });
   pictureList.appendChild(similarListFragment);
-  console.log(picture);
 };
 
 export {renderPictures};
