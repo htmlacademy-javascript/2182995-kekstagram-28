@@ -1,5 +1,7 @@
 import './create-pictures.js';
 import {isEscapeKey} from './util.js';
+import { renderComments } from './user-comments.js';
+import { createTemplateComments } from './user-comments.js';
 
 
 const fullPicture = document.querySelector('.big-picture');
@@ -8,9 +10,7 @@ const fullPictureImg = document.querySelector('.big-picture').querySelector('img
 const likesCount = document.querySelector('.likes-count');
 const commentsCount = document.querySelector('.comments-count');
 const pictureDescription = document.querySelector('.social__caption');
-const socialCommentsCount = document.querySelector('.social__comment-count');
-const commentLoader = document.querySelector('.comments-loader');
-const commentsList = document.querySelector('.social__comments');
+const commentsLoadMoreButton = document.querySelector('.comments-loader');
 
 
 const onDocumentEscKeydown = (evt) => {
@@ -26,9 +26,9 @@ const openFullPicture = (picture) => {
   fullPictureImg.src = picture.url;
   likesCount.textContent = picture.likes;
   commentsCount.textContent = picture.comments.length;
-  socialCommentsCount.classList.add('hidden');
-  commentLoader.classList.add('hidden');
   pictureDescription.textContent = picture.description;
+  renderComments();
+  createTemplateComments (picture.comments);
   document.addEventListener('keydown', onDocumentEscKeydown);
 };
 
@@ -40,6 +40,10 @@ const closeFullPicture = () => {
 
 fullPictureCancel.addEventListener('click', () => {
   closeFullPicture();
+});
+
+commentsLoadMoreButton.addEventListener('click', () => {
+  renderComments();
 });
 
 export {openFullPicture};
