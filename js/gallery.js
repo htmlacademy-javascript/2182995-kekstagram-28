@@ -1,6 +1,6 @@
 import { openFullPicture } from './full-picture.js';
 import { renderPictures } from './create-pictures.js';
-import { renderComments } from './user-comments.js';
+import { renderComments } from './full-picture.js';
 
 
 const container = document.querySelector('.pictures');
@@ -14,7 +14,6 @@ const renderGallery = (pictures) => {
     evt.preventDefault();
     const picture = pictures.find ((item) => item.id === Number(thumbnail.dataset.id));
     openFullPicture(picture);
-    renderComments();
   });
   renderPictures (pictures, container);
 };
