@@ -1,4 +1,3 @@
-import { openFullPicture } from './full-picture.js';
 
 const pictureList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -17,7 +16,6 @@ const renderPictures = (pictures) => {
 
     pictureElement.addEventListener('click', (evt) => {
       evt.preventDefault();
-      openFullPicture(picture);
     });
   });
   pictureList.appendChild(similarListFragment);
