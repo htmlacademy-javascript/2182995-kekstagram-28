@@ -1,4 +1,6 @@
 import {isEscapeKey} from './util.js';
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштэги';
 const MAX_HASHTAG_COUNT = 5;
@@ -56,6 +58,8 @@ const showModal = () => {
 
 const hideModal = () => {
   form.reset();
+  resetScale();
+  resetEffects();
   overlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscKeydown);
