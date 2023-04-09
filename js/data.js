@@ -3,7 +3,7 @@ import {createRandomIdFromRangeGenerator} from './util.js';
 import {getRandomArrayElement} from './util.js';
 import {createComment} from './create-comment.js';
 
-const PICTURE_COUNT = 15;
+const PICTURE_COUNT = 45;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
 const COMMENTS_COUNT = 25;

@@ -1,6 +1,8 @@
 import {isEscapeKey} from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
+import { sendData } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштэги';
 const MAX_HASHTAG_COUNT = 5;
@@ -14,10 +16,12 @@ const hashtagField = document.querySelector ('.text__hashtags');
 const commentField = document.querySelector ('.text__description');
 const form = document.querySelector('.img-upload__form');
 const submitButton = document.querySelector('.img-upload__submit');
+const body = document.querySelector('body');
 
 const SubmitButtonText = {
-  IDLE: 'Сохранить',
-  SENDING: 'Сохраняю...'
+  IDLE: 'Данные опубликованы',
+  SENDING: 'Сохраняю...',
+  POSTING: 'Сохранить'
 };
 
 const pristine = new Pristine(form, {
@@ -57,8 +61,9 @@ const onFormSubmit = (evt) => {
 
 const showModal = () => {
   overlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
+  submitButton.textContent = SubmitButtonText.POSTING;
 };
 
 const hideModal = () => {
@@ -66,7 +71,7 @@ const hideModal = () => {
   resetScale();
   resetEffects();
   overlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentEscKeydown);
 };
 
@@ -100,14 +105,21 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const setOnFormSubmit = (cb) => {
-  form.addEventListener('submit', async (evt) => {
+const setOnFormSubmit = () => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
-      await cb(new FormData(form));
-      unblockSubmitButton();
+      sendData(new FormData(form))
+        .then(() => {
+          showSuccessMessage();
+        })
+        .catch (() => {
+          showErrorMessage();
+        })
+        .finally(unblockSubmitButton);
+      setTimeout (() => hideModal(), 3000);
     }
   });
 };

@@ -34,6 +34,15 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 const getRandomArrayElement = (array) =>
   array[getRandomInteger(0, array.length - 1)];
 
+
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+  };
+};
+
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -57,5 +66,5 @@ export {getRandomArrayElement};
 export {getRandomInteger};
 export {createRandomIdFromRangeGenerator};
 export {isEscapeKey};
-export {showAlert};
+export {showAlert, debounce};
 
