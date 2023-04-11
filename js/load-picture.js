@@ -5,6 +5,7 @@ const FILEFIELD_ERROR_TEXT = 'Загрузите файл в формате jpg 
 
 const fileChooser = document.querySelector('input[type=file]');
 const preview = document.querySelector('.img-upload__preview img');
+const previewEffectsImages = document.querySelectorAll('.effects__preview');
 
 const loadLocalFile = () => {
   fileChooser.addEventListener('change', () => {
@@ -19,6 +20,9 @@ const loadLocalFile = () => {
       hideModal();
       showAlert(FILEFIELD_ERROR_TEXT);
     }
+    previewEffectsImages.forEach((image) => {
+      image.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
   });
 };
 
