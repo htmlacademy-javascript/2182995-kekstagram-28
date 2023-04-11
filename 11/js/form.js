@@ -62,7 +62,7 @@ const onFormSubmit = (evt) => {
 const showModal = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', onDocumentEscKeydown);
+  document.addEventListener('keydown', onDocumentEscapeKeydown);
   submitButton.textContent = SubmitButtonText.POSTING;
 };
 
@@ -72,7 +72,7 @@ const hideModal = () => {
   resetEffects();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentEscKeydown);
+  document.removeEventListener('keydown', onDocumentEscapeKeydown);
 };
 
 
@@ -80,7 +80,7 @@ const isTextFieldFocused = () =>
   document.activeElement === hashtagField ||
   document.activeElement === commentField;
 
-function onDocumentEscKeydown(evt) {
+function onDocumentEscapeKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
     hideModal();

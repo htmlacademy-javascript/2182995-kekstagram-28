@@ -1,44 +1,13 @@
 const ALERT_SHOW_TIME = 5000;
-
-// Функция генерирует случайное целое число
-
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-// Функция генерирует случайное целое число без повтора
-
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const lastGeneratedID = [];
-
-  return function() {
-    let currentID = getRandomInteger(min, max);
-    if (lastGeneratedID.length >= (max - min + 1)) {
-      return null;
-    }
-    while (lastGeneratedID.includes(currentID)) {
-      currentID = getRandomInteger(min, max);
-    }
-    lastGeneratedID.push(currentID);
-    return currentID;
-  };
-};
+const delayOfLoad = 500;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-// Функция извлекает случайный элемент из массива
-
-const getRandomArrayElement = (array) =>
-  array[getRandomInteger(0, array.length - 1)];
-
-
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = delayOfLoad) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
+    timeoutId = setTimeout(()=> callback.apply(this, rest), timeoutDelay);
   };
 };
 
@@ -62,9 +31,6 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomArrayElement};
-export {getRandomInteger};
-export {createRandomIdFromRangeGenerator};
-export {isEscapeKey};
-export {showAlert, debounce};
+
+export {showAlert, debounce, isEscapeKey};
 

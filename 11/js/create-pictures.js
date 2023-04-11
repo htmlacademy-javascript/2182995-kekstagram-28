@@ -1,6 +1,5 @@
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-
 const createPictures = ({url, description, comments, likes, id}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = url;
