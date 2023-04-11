@@ -1,5 +1,11 @@
 import { isEscapeKey } from './util.js';
 
+function onDocumentEscapeKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+  }
+}
+
 const createElementMessage = (selector) => {
   const template = document.querySelector(selector).content;
   const sectionElement = template.querySelector('section');
@@ -17,7 +23,7 @@ const showSuccessMessage = () => {
     if(isEscapeKey(evt)) {
       success.remove();
     }
-  });
+  }, {once: true});
   successButton.addEventListener('click',() => success.remove());
   document.addEventListener('click', (evt) => {
     if(evt.target !== successInner) {
@@ -26,11 +32,6 @@ const showSuccessMessage = () => {
   });
 };
 
-function onDocumentEscapeKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-  }
-}
 
 const showErrorMessage = () => {
   createElementMessage('#error');
@@ -43,7 +44,7 @@ const showErrorMessage = () => {
     if(isEscapeKey(evt)) {
       error.remove();
     }
-  });
+  }, {once: true});
   errorButton.addEventListener('click',() => error.remove());
   document.addEventListener('click',(evt) => {
     if(evt.target !== errorInner) {

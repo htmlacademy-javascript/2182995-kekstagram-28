@@ -19,7 +19,7 @@ const submitButton = document.querySelector('.img-upload__submit');
 const body = document.querySelector('body');
 
 const SubmitButtonText = {
-  IDLE: 'Данные опубликованы',
+  IDLE: 'Повторить отправку',
   SENDING: 'Сохраняю...',
   POSTING: 'Сохранить'
 };
@@ -113,13 +113,13 @@ const setOnFormSubmit = () => {
       blockSubmitButton();
       sendData(new FormData(form))
         .then(() => {
+          hideModal();
           showSuccessMessage();
         })
         .catch (() => {
           showErrorMessage();
         })
         .finally(unblockSubmitButton);
-      setTimeout (() => hideModal(), 3000);
     }
   });
 };

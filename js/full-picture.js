@@ -6,7 +6,23 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentList = bigPicture.querySelector('.social__comments');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentListItem = bigPicture.querySelector('.social__comment');
+const body = document.querySelector('body');
 commentListItem.classList.add('hidden');
+
+
+function showComments (hiddenComments, count) {
+  for (let i = 0; i < count; i++) {
+    hiddenComments[i].classList.remove('hidden');
+  }
+  commentsCount.textContent = `${commentList.children.length - commentList.querySelectorAll('.hidden').length} из ${commentList.children.length} комментариев`;
+}
+
+
+function closeUserModal () {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+}
+
 
 const loadComments = () => {
   const hiddenComments = commentList.querySelectorAll('.hidden');
@@ -18,15 +34,6 @@ const loadComments = () => {
   }
 };
 
-function showComments (hiddenComments, count) {
-  for (let i = 0; i < count; i++) {
-    hiddenComments[i].classList.remove('hidden');
-  }
-  commentsCount.textContent = `${commentList.children.length - commentList.querySelectorAll('.hidden').length} из ${commentList.children.length} комментариев`;
-}
-
-
-commentsLoader.addEventListener('click', loadComments);
 
 const renderComments = (comments) => {
   commentList.innerHTML = '';
@@ -55,14 +62,11 @@ const onDocumentEscapeKeydown = (evt) => {
   }
 };
 
-const body = document.querySelector('body');
-
-function closeUserModal () {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-}
-
 userModalCloseElement.addEventListener('click', () => closeUserModal ());
+
+const onLoadButtonClick = () => {
+  commentsLoader.addEventListener('click', loadComments);
+};
 
 
 const openFullPicture = (data) => {
@@ -71,6 +75,7 @@ const openFullPicture = (data) => {
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentEscapeKeydown);
+  onLoadButtonClick();
   renderPictureComments(data);
   renderComments(data.comments);
   loadComments();
