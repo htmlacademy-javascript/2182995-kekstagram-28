@@ -1,13 +1,11 @@
-import './form.js';
-import './full-picture.js';
+import {loadLocalFile} from './load-picture.js';
 import {showAlert, debounce} from './util.js';
 import { renderGallery } from './gallery.js';
 import { setOnFormSubmit} from './form.js';
 import { getData} from './api.js';
-//import {loadLocalFile} from './load-picture.js';
 import { init, getFilter } from './filter.js';
 
-//loadLocalFile();
+loadLocalFile();
 setOnFormSubmit();
 
 

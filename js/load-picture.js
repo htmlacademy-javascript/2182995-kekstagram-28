@@ -1,5 +1,5 @@
 import {hideModal} from './form.js';
-import {showAlert} from './util';
+import {showAlert} from './util.js';
 const FILE_TYPES = ['jpg','png'];
 const FILEFIELD_ERROR_TEXT = 'Загрузите файл в формате jpg или png';
 
