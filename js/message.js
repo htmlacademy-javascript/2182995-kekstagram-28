@@ -29,7 +29,7 @@ const showSuccessMessage = () => {
     if(evt.target !== successInner) {
       success.remove();
     }
-  });
+  }, {once: true});
 };
 
 
@@ -50,7 +50,7 @@ const showErrorMessage = () => {
     if(evt.target !== errorInner) {
       error.remove();
     }
-  });
+  }, {once: true});
 };
 
 export {showErrorMessage, showSuccessMessage};

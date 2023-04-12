@@ -64,10 +64,9 @@ const onDocumentEscapeKeydown = (evt) => {
 
 userModalCloseElement.addEventListener('click', () => closeUserModal ());
 
-const onLoadButtonClick = () => {
-  commentsLoader.addEventListener('click', loadComments);
-};
 
+const onLoadButtonClick = () => loadComments();
+commentsLoader.addEventListener('click', onLoadButtonClick);
 
 const openFullPicture = (data) => {
   bigPicture.classList.remove('hidden');
@@ -75,11 +74,11 @@ const openFullPicture = (data) => {
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentEscapeKeydown);
-  onLoadButtonClick();
   renderPictureComments(data);
   renderComments(data.comments);
   loadComments();
 };
+
 
 export {openFullPicture};
 

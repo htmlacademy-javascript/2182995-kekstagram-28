@@ -1,7 +1,6 @@
 import { openFullPicture} from './full-picture.js';
 import { renderPictures } from './create-pictures.js';
 
-
 const container = document.querySelector('.pictures');
 let pictures = [];
 
