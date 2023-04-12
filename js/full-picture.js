@@ -1,106 +1,84 @@
-import './create-pictures.js';
 import {isEscapeKey} from './util.js';
 
+const COMMENT_SHOW_COUNT = 5;
+const bigPicture = document.querySelector('.big-picture');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+const commentList = bigPicture.querySelector('.social__comments');
+const commentsCount = bigPicture.querySelector('.social__comment-count');
+const commentListItem = bigPicture.querySelector('.social__comment');
+const body = document.querySelector('body');
+commentListItem.classList.add('hidden');
 
-const fullPicture = document.querySelector('.big-picture');
-const fullPictureCancel = document.querySelector('.big-picture__cancel');
-const fullPictureImg = document.querySelector('.big-picture').querySelector('img');
-const likesCount = document.querySelector('.likes-count');
-const commentsCount = document.querySelector('.comments-count');
-const pictureDescription = document.querySelector('.social__caption');
-const commentsLoadMoreButton = document.querySelector('.comments-loader');
-const commentsList = document.querySelector('.social__comments');
-const socialComment = document.querySelector('.social__comment');
-const socialListFragment = document.createDocumentFragment();
-const commentsLoaded = document.querySelector('.social__comment-count');
 
-const COMMENTS_STEP = 5;
-let commentsShown = 0;
-let currentComments = [];
+function showComments (hiddenComments, count) {
+  for (let i = 0; i < count; i++) {
+    hiddenComments[i].classList.remove('hidden');
+  }
+  commentsCount.textContent = `${commentList.children.length - commentList.querySelectorAll('.hidden').length} из ${commentList.children.length} комментариев`;
+}
 
-const createTemplateComments = (comments) => {
-  currentComments = comments;
-  commentsList.innerHTML = '';
+
+function closeUserModal () {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+}
+
+
+const loadComments = () => {
+  const hiddenComments = commentList.querySelectorAll('.hidden');
+  if (hiddenComments.length > COMMENT_SHOW_COUNT) {
+    showComments(hiddenComments, COMMENT_SHOW_COUNT);
+  } else if(hiddenComments.length <= COMMENT_SHOW_COUNT) {
+    showComments(hiddenComments,hiddenComments.length);
+    commentsLoader.classList.add('hidden');
+  }
+};
+
+
+const renderComments = (comments) => {
+  commentList.innerHTML = '';
   comments.forEach((comment) => {
-    const userComment = socialComment.cloneNode(true);
-    userComment.querySelector('.social__picture').src = comment.avatar;
-    userComment.querySelector('.social__picture').alt = comment.alt;
-    userComment.querySelector('.social__text').textContent = comment.message;
-
-    socialListFragment.appendChild(userComment);
-
+    const newComment = commentListItem.cloneNode(true);
+    newComment.querySelector('.social__picture').src = comment.avatar;
+    newComment.querySelector('.social__text').textContent = comment.message;
+    commentList.append(newComment);
   });
-  commentsList.appendChild(socialListFragment);
-};
-
-const createComment = ({avatar, name, message}) => {
-  const comment = document.createElement('li');
-  comment.innerHTML = '<img class="social__picture" src="" alt="" width="35" height="35">';
-  comment.classList.add('social__comment');
-  comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = name;
-  comment.querySelector('.social__text').textContent = message;
-
-  return comment;
-};
-
-const renderComments = () => {
-  commentsShown += COMMENTS_STEP;
-  if (commentsShown >= currentComments.length) {
-    commentsLoadMoreButton.classList.add('hidden');
-    commentsShown = currentComments.length;
-  } else {
-    commentsLoadMoreButton.classList.remove('hidden');
-  }
-  const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsShown; i++) {
-    const commentElement = createComment(currentComments[i]);
-    fragment.append(commentElement);
-  }
-
-  commentsList.innerHTML = '';
-  commentsList.append(fragment);
-  commentsLoaded.innerHTML = `${commentsShown}из <span class="comments-count">${currentComments.length}</span> комментариев</div>`;
-
 };
 
 
-const onDocumentEscKeydown = (evt) => {
+const renderPictureComments = ({url, description, likes}) => {
+  bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
+  bigPicture.querySelector('.social__caption').textContent = description;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+};
+
+const userModalCloseElement = bigPicture.querySelector('.cancel');
+
+
+const onDocumentEscapeKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    //closeFullPicture ();
+    closeUserModal();
   }
 };
 
-const openFullPicture = (picture) => {
-  fullPicture.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  fullPictureImg.src = picture.url;
-  likesCount.textContent = picture.likes;
-  commentsCount.textContent = picture.comments.length;
-  pictureDescription.textContent = picture.description;
-  renderComments(picture.comments);
-  createTemplateComments (picture.comments);
-  document.addEventListener('keydown', onDocumentEscKeydown);
+userModalCloseElement.addEventListener('click', () => closeUserModal ());
+
+
+const onLoadButtonClick = () => loadComments();
+commentsLoader.addEventListener('click', onLoadButtonClick);
+
+const openFullPicture = (data) => {
+  bigPicture.classList.remove('hidden');
+  body.classList.add('modal-open');
+  commentsCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+  document.addEventListener('keydown', onDocumentEscapeKeydown);
+  renderPictureComments(data);
+  renderComments(data.comments);
+  loadComments();
 };
 
-const closeFullPicture = () => {
-  fullPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentEscKeydown);
-};
-
-fullPictureCancel.addEventListener('click', () => {
-  closeFullPicture();
-});
-
-commentsLoadMoreButton.addEventListener('click', () => {
-  renderComments();
-});
 
 export {openFullPicture};
-
-export {renderComments};
-export {createTemplateComments};
-
 
